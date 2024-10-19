@@ -7,22 +7,19 @@
 -- kickstart.nvim and not kitchen-sink.nvim ;)
 
 return {
-  -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
-  -- NOTE: And you can specify dependencies as well
   dependencies = {
-    -- Creates a beautiful debugger UI
-    'rcarriga/nvim-dap-ui',
-
-    -- Required dependency for nvim-dap-ui
-    'nvim-neotest/nvim-nio',
-
-    -- Installs the debug adapters for you
-    'williamboman/mason.nvim',
-    'jay-babu/mason-nvim-dap.nvim',
-
-    -- Add your own debuggers here
-    'leoluz/nvim-dap-go',
+    { 'rcarriga/nvim-dap-ui' },
+    { 'nvim-neotest/nvim-nio' },
+    { 'williamboman/mason.nvim' },
+    { 'jay-babu/mason-nvim-dap.nvim' },
+    {
+      'mfussenegger/nvim-dap-python',
+      config = function()
+        local path = require('mason-registry').get_package('debugpy'):get_install_path()
+        require('dap-python').setup(path .. '/venv/bin/python')
+      end,
+    },
   },
   config = function()
     local dap = require 'dap'
@@ -84,13 +81,28 @@ return {
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
-    -- Install golang specific config
-    require('dap-go').setup {
-      delve = {
-        -- On Windows delve must be run attached or it crashes.
-        -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-        detached = vim.fn.has 'win32' == 0,
-      },
-    }
+    -- -- Install golang specific config
+    -- require('dap-go').setup {
+    --   delve = {
+    --     -- On Windows delve must be run attached or it crashes.
+    --     -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
+    --     detached = vim.fn.has 'win32' == 0,
+    --   },
+    -- }
+    --   local autocmd = vim.api.nvim_create_autocmd
+    --   local function augroup(name)
+    --     return vim.api.nvim_create_augroup(name, { clear = true })
+    --   end
+    --
+    --   autocmd({ 'VimEnter', 'FileType', 'BufEnter', 'WinEnter' }, {
+    --     desc = 'Automatically load the launch.json configuration for the DAP (Debug Adapter Protocol) on startup',
+    --     group = augroup 'startup_command',
+    --     callback = function()
+    --       local status, plugin = pcall(require, 'dap.ext.vscode')
+    --       if status then
+    --         plugin.load_launchjs()
+    --       end
+    --     end,
+    --   })
   end,
 }
