@@ -44,7 +44,6 @@ function M.config()
           terms[opts.cmd][num] = nil
         end
       end
-      print(opts.cmd, num)
       terms[opts.cmd][num] = require('toggleterm.terminal').Terminal:new(opts)
     end
     terms[opts.cmd][num]:toggle()
