@@ -24,23 +24,21 @@ return { -- Autocompletion
         },
       },
     },
-    'saadparwaiz1/cmp_luasnip',
+    { 'saadparwaiz1/cmp_luasnip' },
 
     -- Adds other completion capabilities.
     --  nvim-cmp does not ship with all sources by default. They are split
     --  into multiple repos for maintenance purposes.
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-path',
-    'roobert/tailwindcss-colorizer-cmp.nvim',
+    { 'hrsh7th/cmp-nvim-lsp' },
+    { 'hrsh7th/cmp-path' },
+    { 'hrsh7th/cmp-emoji' },
+    { 'luckasRanarison/tailwind-tools.nvim', opts = {}, build = ':UpdateRemotePlugins' },
   },
   config = function()
     -- See `:help cmp`
     local cmp = require 'cmp'
     local luasnip = require 'luasnip'
     luasnip.config.setup {}
-    require('tailwindcss-colorizer-cmp').setup {
-      color_square_width = 2,
-    }
     cmp.setup {
       snippet = {
         expand = function(args)
@@ -99,6 +97,7 @@ return { -- Autocompletion
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
+        { name = 'emoji' },
       },
     }
   end,
