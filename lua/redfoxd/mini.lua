@@ -31,6 +31,11 @@ return { -- Collection of various small independent plugins/modules
       return '%2l:%-2v'
     end
 
+    -- extend f, F, t, T to work on multiple lines.
+    -- Repeat jump by pressing f, F, t, T again. It is reset when cursor moved as a result of not jumping or timeout after idle time (duration customizable).
+    -- Highlight (after customizable delay) all possible target characters and stop it after some (customizable) idle time.
+    -- Normal, Visual, and Operator-pending (with full dot-repeat) modes are supported.
+    require('mini.jump').setup()
     -- ... and there is more!
     --  Check out: https://github.com/echasnovski/mini.nvim
   end,
