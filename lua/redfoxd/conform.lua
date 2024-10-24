@@ -34,14 +34,7 @@ return { -- Autoformat
     formatters_by_ft = {
       lua = { 'stylua' },
       python = { 'isort', 'black' },
-      xml = { 'xmlformatter' },
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
-    },
-    formatters = {
-      xmlformatter = {
-        command = 'xmlformat',
-        args = { '-' },
-      },
     },
   },
 }
