@@ -59,7 +59,7 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>l', group = '[L]SP', mode = { 'n', 'x' } },
       { '<leader>s', group = '[S]earch' },
       { '<leader>t', group = '[T]oggle' },
-      { '<leader>g', group = 'Git [H]unk', mode = { 'n', 'v' } },
+      { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       { '<leader>d', group = '[D]ebug' },
     },
   },
