@@ -48,8 +48,11 @@ return { -- Autoformat
     formatters_by_ft = {
       lua = { 'stylua' },
       python = { 'isort', 'black' },
-      javascript = { 'prettierd', 'prettier', stop_after_first = true },
-      astro = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript = { 'prettierd', 'prettier', 'deno_fmt', stop_after_first = true },
+      typescript = { 'prettierd', 'prettier', 'deno_fmt', stop_after_first = true },
+      astro = { 'deno_fmt', 'prettierd', 'prettier', stop_after_first = true },
+      svelte = { 'prettierd', 'prettier', 'deno_fmt', stop_after_first = true },
+      json = { 'prettierd', 'prettier', 'deno_fmt', stop_after_first = true },
     },
   },
 }
