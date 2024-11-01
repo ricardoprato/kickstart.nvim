@@ -169,6 +169,7 @@ return { -- LSP Configuration & Plugins
       deno = {},
       html = {},
       ltex = {},
+      astro = {},
       -- lemminx = {},
       lua_ls = {
         -- cmd = {...},
