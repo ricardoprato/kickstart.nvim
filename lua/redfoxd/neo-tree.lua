@@ -19,8 +19,8 @@ return {
           },
         },
       },
-      opts = {}
-    }, -- image support in preview windo
+      opts = {},
+    },
   },
   cmd = 'Neotree',
   keys = {
@@ -74,11 +74,14 @@ return {
     filesystem = {
       window = {
         mappings = {
+          ['l'] = 'open',
+          ['h'] = 'close_node',
           ['\\'] = 'close_window',
           ['Y'] = 'copy_selector',
           ['F'] = 'find_in_dir',
         },
       },
+      bind_to_cwd = false, -- true creates a 2-way binding between vim's cwd and neo-tree's root
       follow_current_file = {
         enabled = true, -- This will find and focus the file in the active buffer every time
       },
