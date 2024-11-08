@@ -22,6 +22,15 @@ return { -- LSP Configuration & Plugins
     },
   },
   config = function()
+    local lspconfigs = require 'lspconfig.configs'
+    lspconfigs.odoo_lsp = {
+      default_config = {
+        name = 'odoo-lsp',
+        cmd = { 'odoo-lsp' },
+        filetypes = { 'javascript', 'xml', 'python' },
+        root_dir = require('lspconfig.util').root_pattern('.odoo_lsp', '.odoo_lsp.json', '.git'),
+      },
+    }
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
       callback = function(event)
@@ -153,6 +162,8 @@ return { -- LSP Configuration & Plugins
     --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+    local lspconfig = require 'lspconfig'
+    lspconfig.odoo_lsp.setup {}
     local servers = {
       -- clangd = {},
       -- gopls = {},
@@ -164,13 +175,13 @@ return { -- LSP Configuration & Plugins
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
-      -- tsserver = {},
+      ts_ls = {},
       --
       deno = {},
       html = {},
       ltex = {},
       astro = {},
-      -- lemminx = {},
+      lemminx = {},
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
