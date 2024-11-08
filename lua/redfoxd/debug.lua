@@ -155,6 +155,24 @@ return {
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
+    vim.fn.sign_define('DapBreakpoint', {
+      text = '',
+      texthl = 'DiagnosticSignError',
+      linehl = '',
+      numhl = '',
+    })
+    vim.fn.sign_define('DapBreakpointRejected', {
+      text = '',
+      texthl = 'DiagnosticSignError',
+      linehl = '',
+      numhl = '',
+    })
+    vim.fn.sign_define('DapStopped', {
+      text = '',
+      texthl = 'DiagnosticSignWarn',
+      linehl = 'Visual',
+      numhl = 'DiagnosticSignWarn',
+    })
 
     local path = require('mason-registry').get_package('debugpy'):get_install_path()
     require('dap-python').setup(path .. '/venv/bin/python')
@@ -168,11 +186,6 @@ return {
     --     detached = vim.fn.has 'win32' == 0,
     --   },
     -- }
-    -- local autocmd = vim.api.nvim_create_autocmd
-    -- local function augroup(name)
-    --   return vim.api.nvim_create_augroup(name, { clear = true })
-    -- end
-
     autocmd({ 'VimEnter', 'FileType', 'BufEnter', 'WinEnter' }, {
       desc = 'Automatically load the launch.json configuration for the DAP (Debug Adapter Protocol) on startup',
       group = augroup 'startup_command',
