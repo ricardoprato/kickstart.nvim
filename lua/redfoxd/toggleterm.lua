@@ -28,8 +28,8 @@ function M.config()
   local user_terminals = {}
   local function toggle_term_cmd(opts)
     local terms = user_terminals
-    if type(opts) == "string" then
-     opts = { cmd = opts, hidden = true }
+    if type(opts) == 'string' then
+      opts = { cmd = opts, hidden = true }
     end
     local num = vim.v.count > 0 and vim.v.count or 1
     if not terms[opts.cmd] then
@@ -53,9 +53,9 @@ function M.config()
   end
 
   if vim.fn.executable 'lazygit' == 1 then
-    map('n', '<leader>tg', function()
+    map('n', '<leader>gg', function()
       toggle_term_cmd 'lazygit'
-    end, { desc = '[T]oggle lazy[g]it' })
+    end, { desc = 'lazy[g]it' })
   end
   if vim.fn.executable 'lazydocker' == 1 then
     map('n', '<leader>td', function()
