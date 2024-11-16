@@ -15,7 +15,6 @@ return { -- Autocompletion
         return 'make install_jsregexp'
       end)(),
       dependencies = {
-        --    https://github.com/rafamadriz/friendly-snippets
         {
           'rafamadriz/friendly-snippets',
           config = function()
@@ -25,17 +24,20 @@ return { -- Autocompletion
       },
     },
     { 'saadparwaiz1/cmp_luasnip' },
-
-    -- Adds other completion capabilities.
-    --  nvim-cmp does not ship with all sources by default. They are split
-    --  into multiple repos for maintenance purposes.
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/cmp-path' },
     { 'hrsh7th/cmp-emoji' },
     { 'luckasRanarison/tailwind-tools.nvim', opts = {}, build = ':UpdateRemotePlugins' },
+    {
+      'supermaven-inc/supermaven-nvim',
+      build = ':SupermavenUseFree',
+      opts = {
+        disable_keymaps = true,
+        disable_inline_completion = true,
+      },
+    },
   },
   config = function()
-    -- See `:help cmp`
     local cmp = require 'cmp'
     local luasnip = require 'luasnip'
     luasnip.config.setup {}
@@ -94,7 +96,9 @@ return { -- Autocompletion
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
       },
       sources = {
+        { name = 'supermaven' },
         { name = 'nvim_lsp' },
+        { name = 'lazydev' },
         { name = 'luasnip' },
         { name = 'path' },
         { name = 'emoji' },
