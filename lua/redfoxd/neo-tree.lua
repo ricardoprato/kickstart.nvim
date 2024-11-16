@@ -5,9 +5,9 @@ return {
   'nvim-neo-tree/neo-tree.nvim',
   version = '*',
   dependencies = {
-    { 'nvim-tree/nvim-web-devicons' }, -- not strictly required, but recommended
     {
       '3rd/image.nvim',
+      lazy = true,
       dependencies = {
         'leafo/magick',
         {
@@ -81,7 +81,6 @@ return {
           ['F'] = 'find_in_dir',
         },
       },
-      bind_to_cwd = false, -- true creates a 2-way binding between vim's cwd and neo-tree's root
       follow_current_file = {
         enabled = true, -- This will find and focus the file in the active buffer every time
       },
