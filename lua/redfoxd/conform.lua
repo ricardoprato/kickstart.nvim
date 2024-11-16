@@ -1,6 +1,5 @@
 return { -- Autoformat
   'stevearc/conform.nvim',
-  lazy = false,
   event = { 'BufWritePre' },
   cmd = { 'ConformInfo' },
   keys = {
@@ -30,6 +29,9 @@ return { -- Autoformat
       desc = '[T]oggle Auto-[F]ormat buffer',
     },
   },
+  -- This will provide type hinting with LuaLS
+  ---@module "conform"
+  ---@type conform.setupOpts
   opts = {
     notify_on_error = false,
     format_on_save = function(bufnr)
@@ -55,4 +57,7 @@ return { -- Autoformat
       json = { 'prettierd', 'prettier', 'deno_fmt', stop_after_first = true },
     },
   },
+  init = function()
+    vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+  end,
 }
