@@ -5,4 +5,7 @@ return -- Lua
     { 'folke/twilight.nvim' },
   },
   opts = {},
+  keys = {
+    { '<leader>z', ':ZenMode<CR>', { desc = 'ZenMode' } },
+  },
 }
