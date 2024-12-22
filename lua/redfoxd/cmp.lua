@@ -29,12 +29,15 @@ return { -- Autocompletion
     { 'hrsh7th/cmp-emoji' },
     { 'luckasRanarison/tailwind-tools.nvim', opts = {}, build = ':UpdateRemotePlugins' },
     {
-      'supermaven-inc/supermaven-nvim',
-      build = ':SupermavenUseFree',
-      opts = {
-        disable_keymaps = true,
-        disable_inline_completion = true,
-      },
+      'zbirenbaum/copilot.lua', -- for providers='copilot'
+      opts = {},
+      build = ':Copilot auth',
+    },
+    {
+      'zbirenbaum/copilot-cmp',
+      config = function()
+        require('copilot_cmp').setup()
+      end,
     },
   },
   config = function()
@@ -96,7 +99,7 @@ return { -- Autocompletion
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
       },
       sources = {
-        { name = 'supermaven' },
+        { name = 'copilot' },
         { name = 'nvim_lsp' },
         { name = 'lazydev' },
         { name = 'luasnip' },

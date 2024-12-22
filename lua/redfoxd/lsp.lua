@@ -167,7 +167,6 @@ return { -- LSP Configuration & Plugins
     local servers = {
       -- clangd = {},
       -- gopls = {},
-      pyright = {},
       -- rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
       --
@@ -175,13 +174,29 @@ return { -- LSP Configuration & Plugins
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
-      ts_ls = {},
       --
-      deno = {},
-      html = {},
-      ltex = {},
-      astro = {},
-      lemminx = {},
+      jsonls = {
+        settings = {
+          json = {
+            schemas = require('schemastore').json.schemas(),
+            validate = { enable = true },
+          },
+        },
+      },
+      yamlls = {
+        settings = {
+          yaml = {
+            schemaStore = {
+              -- You must disable built-in schemaStore support if you want to use
+              -- this plugin and its advanced options like `ignore`.
+              enable = false,
+              -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+              url = '',
+            },
+            schemas = require('schemastore').yaml.schemas(),
+          },
+        },
+      },
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
@@ -213,18 +228,16 @@ return { -- LSP Configuration & Plugins
       'stylua', -- Used to format Lua code
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
-    require('mason-lspconfig').setup {
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for tsserver)
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
-      },
+    require('mason-lspconfig').setup()
+    require('mason-lspconfig').setup_handlers {
+      function(server_name)
+        local server = servers[server_name] or {}
+        -- This handles overriding only values explicitly passed
+        -- by the server configuration above. Useful when disabling
+        -- certain features of an LSP (for example, turning off formatting for tsserver)
+        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+        require('lspconfig')[server_name].setup(server)
+      end,
     }
   end,
 }
