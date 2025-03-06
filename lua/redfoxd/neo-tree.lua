@@ -4,24 +4,24 @@
 return {
   'nvim-neo-tree/neo-tree.nvim',
   version = '*',
-  dependencies = {
-    {
-      '3rd/image.nvim',
-      lazy = true,
-      dependencies = {
-        'leafo/magick',
-        {
-          'vhyrro/luarocks.nvim',
-          opts = {
-            rocks = {
-              hererocks = true,
-            },
-          },
-        },
-      },
-      opts = {},
-    },
-  },
+  -- dependencies = {
+  --   {
+  --     '3rd/image.nvim',
+  --     lazy = true,
+  --     dependencies = {
+  --       'leafo/magick',
+  --       {
+  --         'vhyrro/luarocks.nvim',
+  --         opts = {
+  --           rocks = {
+  --             hererocks = true,
+  --           },
+  --         },
+  --       },
+  --     },
+  --     opts = {},
+  --   },
+  -- },
   cmd = 'Neotree',
   keys = {
     { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'Toggle Neo-tree' },
