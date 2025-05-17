@@ -174,27 +174,7 @@ return {
       numhl = 'DiagnosticSignWarn',
     })
 
-    local path = require('mason-registry').get_package('debugpy'):get_install_path()
+    local path = vim.fn.exepath 'debugpy'
     require('dap-python').setup(path .. '/venv/bin/python')
-    local autocmd = require('utils').autocmd
-    local augroup = require('utils').augroup
-    -- -- Install golang specific config
-    -- require('dap-go').setup {
-    --   delve = {
-    --     -- On Windows delve must be run attached or it crashes.
-    --     -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-    --     detached = vim.fn.has 'win32' == 0,
-    --   },
-    -- }
-    autocmd({ 'VimEnter', 'FileType', 'BufEnter', 'WinEnter' }, {
-      desc = 'Automatically load the launch.json configuration for the DAP (Debug Adapter Protocol) on startup',
-      group = augroup 'startup_command',
-      callback = function()
-        local status, plugin = pcall(require, 'dap.ext.vscode')
-        if status then
-          plugin.load_launchjs()
-        end
-      end,
-    })
   end,
 }
