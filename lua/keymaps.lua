@@ -36,6 +36,10 @@ else
   map('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 end
 
+map('n', '<leader><leader>x', ':source %<CR>', { desc = 'Source current file' })
+map('n', '<leader>x', ':.lua<CR>', { desc = 'Source current line' })
+map('v', '<leader>x', ':lua<CR>', { desc = 'Source current selection' })
+
 map('n', '<C-Up>', '<cmd>resize -2<CR>', { desc = 'Resize split up' })
 map('n', '<C-Down>', '<cmd>resize +2<CR>', { desc = 'Resize split down' })
 map('n', '<C-Left>', '<cmd>vertical resize -2<CR>', { desc = 'Resize split left' })
