@@ -51,10 +51,11 @@ function M.config()
   local function map(mode, lhs, rhs, args)
     vim.keymap.set(mode, lhs, rhs, args)
   end
-
+  local git_utils = require 'utils.git'
   if vim.fn.executable 'lazygit' == 1 then
     map('n', '<leader>gg', function()
-      toggle_term_cmd 'lazygit'
+      local repo_path = git_utils.get_git_repo_path()
+      toggle_term_cmd { cmd = 'lazygit', dir = repo_path }
     end, { desc = 'lazy[g]it' })
   end
   if vim.fn.executable 'lazydocker' == 1 then
