@@ -176,5 +176,17 @@ return {
 
     local path = vim.fn.exepath 'debugpy'
     require('dap-python').setup(path .. '/venv/bin/python')
+    local autocmd = require('utils').autocmd
+    local augroup = require('utils').augroup
+    autocmd({ 'VimEnter', 'FileType', 'BufEnter', 'WinEnter' }, {
+      desc = 'Automatically load the launch.json configuration for the DAP (Debug Adapter Protocol) on startup',
+      group = augroup 'startup_command',
+      callback = function()
+        local status, plugin = pcall(require, 'dap.ext.vscode')
+        if status then
+          plugin.load_launchjs()
+        end
+      end,
+    })
   end,
 }
