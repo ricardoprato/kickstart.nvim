@@ -27,6 +27,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
     -- Useful for getting pretty icons, but requires a Nerd Font.
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+    { 'nvim-telescope/telescope-file-browser.nvim' },
   },
   config = function()
     -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -50,15 +51,67 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
     -- [[ Configure Telescope ]]
     -- See `:help telescope` and `:help telescope.setup()`
+    local actions = require 'telescope.actions'
+    local live_grep_from_project_git_root = function()
+      local function is_git_repo()
+        vim.fn.system 'git rev-parse --is-inside-work-tree'
+
+        return vim.v.shell_error == 0
+      end
+
+      local function get_git_root()
+        local dot_git_path = vim.fn.finddir('.git', '.;')
+        return vim.fn.fnamemodify(dot_git_path, ':h')
+      end
+
+      local opts = {}
+
+      if is_git_repo() then
+        opts = {
+          cwd = get_git_root(),
+        }
+      end
+
+      require('telescope.builtin').live_grep(opts)
+    end
+    local find_files_from_project_git_root = function()
+      local function is_git_repo()
+        vim.fn.system 'git rev-parse --is-inside-work-tree'
+        return vim.v.shell_error == 0
+      end
+      local function get_git_root()
+        local dot_git_path = vim.fn.finddir('.git', '.;')
+        return vim.fn.fnamemodify(dot_git_path, ':h')
+      end
+      local opts = {}
+      if is_git_repo() then
+        opts = {
+          cwd = get_git_root(),
+        }
+      end
+      require('telescope.builtin').find_files(opts)
+    end
     require('telescope').setup {
       --  All the info you're looking for is in `:help telescope.setup()`
       --
-      -- defaults = {
-      --   mappings = {
-      --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-      --   },
-      -- },
-      -- pickers = {}
+      defaults = vim.tbl_extend('force', require('telescope.themes').get_ivy(), {
+        mappings = {
+          i = {
+            ['<c-space>'] = 'to_fuzzy_refine',
+            ['<C-s>'] = actions.cycle_previewers_next,
+            ['<C-a>'] = actions.cycle_previewers_prev,
+          },
+        },
+      }),
+      pickers = {
+        buffers = {
+          mappings = {
+            i = {
+              ['<C-d>'] = actions.delete_buffer + actions.move_to_top,
+            },
+          },
+        },
+      },
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
@@ -69,7 +122,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- Enable Telescope extensions if they are installed
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
-
+    pcall(require('telescope').load_extension, 'file_browser')
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
     local function map(mode, lhs, rhs, args)
@@ -78,15 +131,17 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
     map('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     map('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-    map('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+    map('n', '<leader>sf', find_files_from_project_git_root, { desc = '[S]earch [F]iles' })
     map('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
     map('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-    map('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+    map('n', '<leader>sg', live_grep_from_project_git_root, { desc = '[S]earch by [G]rep' })
     map('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     map('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
     map('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
     map('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-    map('n', '<leader>m', builtin.man_pages, { desc = '[S]earch  existing buffers' })
+    map('n', '<leader>m', builtin.man_pages, { desc = '[S]earch existing buffers' })
+    map('n', '<leader>sd', ':Telescope file_browser<CR>', { desc = '[S]earch [D]irectories' })
+    map('n', '<leader>sD', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { desc = '[S]earch [D]irectories' })
 
     -- Slightly advanced example of overriding default behavior and theme
     map('n', '<leader>/', function()
