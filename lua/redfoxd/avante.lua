@@ -3,6 +3,8 @@ return {
   event = 'VeryLazy',
   lazy = false,
   version = false,
+  ---@module 'avante'
+  ---@type avante.Config
   opts = {
     provider = 'copilot', -- Recommend using Claude
     auto_suggestions_provider = 'copilot',
@@ -34,5 +36,6 @@ return {
       },
       ft = { 'markdown', 'Avante' },
     },
+    { 'zbirenbaum/copilot.lua' },
   },
 }

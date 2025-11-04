@@ -7,6 +7,9 @@ return {
     init = function()
       vim.cmd.colorscheme 'catppuccin'
     end,
+    opts = {
+      integrations = { blink_cmp = true },
+    },
   },
   {
     'rose-pine/neovim',

@@ -26,6 +26,7 @@ return {
         require('copilot_cmp').setup()
       end,
     },
+    { 'Kaiser-Yang/blink-cmp-avante' },
   },
   version = '1.*',
   ---@module 'blink.cmp'
@@ -47,7 +48,7 @@ return {
     snippets = { preset = 'luasnip' },
     sources = {
       -- Remove 'buffer' if you don't want text completions, by default it's only enabled when LSP returns no items
-      default = { 'copilot', 'lsp', 'path', 'snippets', 'buffer' },
+      default = { 'avante', 'lsp', 'path', 'snippets', 'buffer' },
       providers = {
         copilot = {
           name = 'copilot',
@@ -61,13 +62,21 @@ return {
             return items
           end,
         },
+        avante = {
+          module = 'blink-cmp-avante',
+          name = 'Avante',
+          opts = {
+            -- options for blink-cmp-avante
+          },
+        },
         lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
       },
     },
-    fuzzy = { implementation = 'lua' },
+    fuzzy = { implementation = 'prefer_rust_with_warning' },
     signature = { enabled = true },
     appearance = {
       nerd_font_variant = 'mono',
     },
+    completion = { accept = { auto_brackets = { enabled = true } } },
   },
 }

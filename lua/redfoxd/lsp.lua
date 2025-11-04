@@ -37,21 +37,21 @@ return { -- LSP Configuration & Plugins
       callback = function(event)
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         local active_clients = vim.lsp.get_clients()
-        if client and client.name == 'denols' then
-          for _, client_ in pairs(active_clients) do
-            -- stop tsserver if denols is already active
-            if client_.name == 'tsserver' then
-              client_.stop(client_)
-            end
-          end
-        elseif client and client.name == 'tsserver' then
-          for _, client_ in pairs(active_clients) do
-            -- prevent tsserver from starting if denols is already active
-            if client_.name == 'denols' then
-              client.stop(client)
-            end
-          end
-        end
+        -- if client and client.name == 'denols' then
+        --   for _, client_ in pairs(active_clients) do
+        --     -- stop tsserver if denols is already active
+        --     if client_.name == 'ts_ls' then
+        --       client_.stop(client_)
+        --     end
+        --   end
+        -- elseif client and client.name == 'ts_ls' then
+        --   for _, client_ in pairs(active_clients) do
+        --     -- prevent tsserver from starting if denols is already active
+        --     if client_.name == 'denols' then
+        --       client.stop(client)
+        --     end
+        --   end
+        -- end
         -- NOTE: Remember that Lua is a real programming language, and as such it is possible
         -- to define small helper and utility functions so you don't have to repeat yourself.
         --

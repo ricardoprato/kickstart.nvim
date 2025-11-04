@@ -52,45 +52,6 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- [[ Configure Telescope ]]
     -- See `:help telescope` and `:help telescope.setup()`
     local actions = require 'telescope.actions'
-    local live_grep_from_project_git_root = function()
-      local function is_git_repo()
-        vim.fn.system 'git rev-parse --is-inside-work-tree'
-
-        return vim.v.shell_error == 0
-      end
-
-      local function get_git_root()
-        local dot_git_path = vim.fn.finddir('.git', '.;')
-        return vim.fn.fnamemodify(dot_git_path, ':h')
-      end
-
-      local opts = {}
-
-      if is_git_repo() then
-        opts = {
-          cwd = get_git_root(),
-        }
-      end
-
-      require('telescope.builtin').live_grep(opts)
-    end
-    local find_files_from_project_git_root = function()
-      local function is_git_repo()
-        vim.fn.system 'git rev-parse --is-inside-work-tree'
-        return vim.v.shell_error == 0
-      end
-      local function get_git_root()
-        local dot_git_path = vim.fn.finddir('.git', '.;')
-        return vim.fn.fnamemodify(dot_git_path, ':h')
-      end
-      local opts = {}
-      if is_git_repo() then
-        opts = {
-          cwd = get_git_root(),
-        }
-      end
-      require('telescope.builtin').find_files(opts)
-    end
     require('telescope').setup {
       --  All the info you're looking for is in `:help telescope.setup()`
       --
@@ -128,20 +89,22 @@ return { -- Fuzzy Finder (files, lsp, etc)
     local function map(mode, lhs, rhs, args)
       vim.keymap.set(mode, lhs, rhs, args)
     end
+    local telescope_roots = require 'redfoxd.telescope.telescope_roots'
 
     map('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     map('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-    map('n', '<leader>sf', find_files_from_project_git_root, { desc = '[S]earch [F]iles' })
+    map('n', '<leader>sf', telescope_roots.project_find_files, { desc = '[S]earch [F]iles' })
+    map('n', '<leader>sF', telescope_roots.global_find_files, { desc = '[S]earch [F]iles (Global)' })
     map('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
     map('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-    map('n', '<leader>sg', live_grep_from_project_git_root, { desc = '[S]earch by [G]rep' })
+    map('n', '<leader>sg', telescope_roots.project_live_grep, { desc = '[S]earch by [G]rep' })
+    map('n', '<leader>sG', telescope_roots.global_live_grep, { desc = '[S]earch by [G]rep (Global)' })
     map('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     map('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+    -- map('n', '<leader>sd', builtin.lsp_document_symbols, { desc = '[S]earch [R]esume' })
     map('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
     map('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
     map('n', '<leader>m', builtin.man_pages, { desc = '[S]earch existing buffers' })
-    map('n', '<leader>sd', ':Telescope file_browser<CR>', { desc = '[S]earch [D]irectories' })
-    map('n', '<leader>sD', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { desc = '[S]earch [D]irectories' })
 
     -- Slightly advanced example of overriding default behavior and theme
     map('n', '<leader>/', function()
