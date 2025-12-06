@@ -227,3 +227,109 @@ sudo pacman -S --noconfirm --needed gcc make git ripgrep fd unzip neovim
 ```
 </details>
 
+
+## Plugins
+
+This Neovim configuration leverages `lazy.nvim` for plugin management and includes a curated set of plugins to enhance the editing experience.
+
+### Featured Plugins:
+
+*   **autopairs**: Automatic closing of parentheses, brackets, etc.
+*   **avante**: (Likely a colorscheme or theme-related setup)
+*   **blink**: (Specific functionality - description to be added if known)
+*   **colorscheme**: Configuration for the color scheme.
+*   **comment**: Smart commenting for various filetypes.
+*   **conform**: A modern formatter for Neovim.
+*   **debug**: Debugging capabilities.
+*   **dressing**: Enhances UI elements like `vim.ui.select` and `vim.ui.input`.
+*   **dropbar**: (Specific functionality - description to be added if known)
+*   **flash**: (Specific functionality - description to be added if known)
+*   **gitsigns**: Shows git diff markers in the sign column.
+*   **icons**: Configuration for file and UI icons.
+*   **indent_line**: Displays indentation guides.
+*   **lint**: Linting support for various languages.
+*   **lsp**: Language Server Protocol integration.
+*   **markdown**: Enhanced Markdown editing.
+*   **mini**: Collection of various small, useful plugins (e.g., `mini.bufremove`, `mini.surround`).
+*   **neo-tree**: A flexible file explorer.
+*   **neoget**: (Specific functionality - description to be added if known)
+*   **neotest**: Neovim test runner.
+*   **noice**: Neovim's UI for messages, cmdline, and popups.
+*   **nvim-treesitter**: Universal syntax highlighting and parsing.
+*   **oil**: Browse files and folders as if they were buffers.
+*   **project**: Project management.
+*   **telescope**: Highly extendable fuzzy finder.
+*   **todo-comments**: Highlights TODO, FIXME, etc. comments.
+*   **toggleterm**: A Neovim plugin to help you easily manage multiple terminals.
+*   **trouble**: A diagnostics and loclist / quickfix list browser.
+*   **vim-sleuth**: Autosets `shiftwidth` and `expandtab`.
+*   **which-key**: Displays a pop-up with possible keybindings.
+*   **zen-mode**: Distraction-free editing.
+
+## Keybindings
+
+`<leader>` is mapped to `<Space>`.
+
+### General
+*   `<Esc>`: Clear search highlight
+
+### Window / Split Navigation & Resizing
+*   `<C-h>`: Move focus to the left split (Kitty) / Move focus to the left window (Neovim)
+*   `<C-j>`: Move focus to the lower split (Kitty) / Move focus to the lower window (Neovim)
+*   `<C-k>`: Move focus to the upper split (Kitty) / Move focus to the upper window (Neovim)
+*   `<C-l>`: Move focus to the right split (Kitty) / Move focus to the right window (Neovim)
+*   `<C-Up>`: Resize split up
+*   `<C-Down>`: Resize split down
+*   `<C-Left>`: Resize split left
+*   `<C-Right>`: Resize split right
+*   `<leader>ws`: [W]indow [S]plit horizontal
+*   `<leader>wv`: [W]indow [V]ertical split
+*   `<leader>wc`: [W]indow [C]lose
+*   `<leader>wo`: [W]indow [O]nly (close others)
+*   `<leader>wh`: [W]indow move [H]left
+*   `<leader>wj`: [W]indow move [J]down
+*   `<leader>wk`: [W]indow move [K]up
+*   `<leader>wl`: Move [W]indow [L]right
+*   `<leader>wr`: [W]indow [R]otate (swap)
+
+### Toggle Settings
+*   `<leader>ua`: Toggle [A]utosave (Global)
+*   `<leader>uba`: Toggle [B]uffer [A]utosave
+*   `<leader>uf`: Toggle [F]ormat (Global)
+*   `<leader>ubf`: Toggle [B]uffer [F]ormat
+
+### Buffer / File Management
+*   `<Leader>w`: Save current buffer
+*   `<Leader>q`: Quit current window
+*   `tt`: Duplicate current line
+*   `<leader>bd`: [B]uffer [D]elete
+*   `<leader>bp`: [B]uffer (previous)
+*   `<leader>bn`: [B]uffer (next)
+*   `<leader>bb`: [B]uffer [B]rowser (Telescope)
+*   `[b`: [B]uffer Previous
+*   `]b`: [B]uffer Next
+
+### Editing / Movement
+*   `<A-k>` (Normal/Insert Mode): Move line up
+*   `<A-j>` (Normal/Insert Mode): Move line down
+*   `<A-k>` (Visual Mode): Move selection up
+*   `<A-j>` (Visual Mode): Move selection down
+*   `<` (Visual Mode): Unindent selection
+*   `>` (Visual Mode): Indent selection
+
+### Terminal Window Navigation
+*   `<Esc><Esc>`: Exit terminal mode
+*   `<C-h>`: Move to left window (Terminal)
+*   `<C-j>`: Move to lower window (Terminal)
+*   `<C-k>`: Move to upper window (Terminal)
+*   `<C-l>`: Move to right window (Terminal)
+
+### Diagnostics / Quickfix
+*   `[d`: Go to previous [D]iagnostic message
+*   `]d`: Go to next [D]iagnostic message
+*   `<leader>xo`: Open floating diagnostic message
+*   `<leader>xd`: Open diagnostics in telescope
+*   `<leader>xt`: Open diagnostics in trouble
+*   `]q`: Next Quickfix item
+*   `[q`: Previous Quickfix item
+*   `<C-q>`: Toggle Quickfix list
