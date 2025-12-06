@@ -1,7 +1,6 @@
 return {
   'yetone/avante.nvim',
   event = 'VeryLazy',
-  lazy = false,
   version = false,
   ---@module 'avante'
   ---@type avante.Config
@@ -50,7 +49,6 @@ return {
       opts = {
         file_types = { 'markdown', 'Avante' },
       },
-      ft = { 'markdown', 'Avante' },
     },
     { 'zbirenbaum/copilot.lua' },
   },

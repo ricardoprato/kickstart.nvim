@@ -1,10 +1,11 @@
 return { -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
+  event = 'VeryLazy',
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for Neovim
     -- Mason must be loaded before its dependents so we need to set it up here.
     -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-    { 'mason-org/mason.nvim', opts = {} },
+    { 'mason-org/mason.nvim', cmd = 'Mason' },
     'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
 
@@ -12,7 +13,7 @@ return { -- LSP Configuration & Plugins
     { 'b0o/SchemaStore.nvim', version = false },
 
     -- Useful status updates for LSP.
-    { 'j-hui/fidget.nvim', opts = {} },
+    { 'j-hui/fidget.nvim', event = 'VeryLazy', opts = {} },
     {
       -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis

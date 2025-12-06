@@ -8,7 +8,6 @@ local kitty = utils.kitty
 
 -- [[ General Keymaps ]]
 map('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlight' })
-map('n', '<leader><leader>x', ':source %<CR>', { desc = 'Source current file' })
 
 -- [[ Window / Split Navigation & Resizing ]]
 if vim.env.KITTY_WINDOW_ID then
@@ -100,5 +99,6 @@ end, { desc = 'Open diagnostics in trouble' })
 
 map('n', ']q', '<cmd>cnext<CR>', { desc = 'Next Quickfix item' })
 map('n', '[q', '<cmd>cprev<CR>', { desc = 'Previous Quickfix item' })
-map('n', '<C-q>', '<cmd>call QuickFixToggle()<CR>', { desc = 'Toggle Quickfix list' }) -- Assuming QuickFixToggle is a function somewhere
-
+map('n', '<C-q>', function()
+  utils.QuickFixToggle()
+end, { desc = 'Toggle Quickfix list' })
