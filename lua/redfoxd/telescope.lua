@@ -32,40 +32,160 @@ return { -- Fuzzy Finder (files, lsp, etc)
   -- REFACTOR: Changed from 'event = "VimEnter"' to 'keys' for true lazy-loading.
   -- The plugin and its configuration will only be loaded when one of these keys is pressed.
   keys = {
-    { '<leader>sh', function() require('telescope.builtin').help_tags() end, desc = '[S]earch [H]elp' },
-    { '<leader>sk', function() require('telescope.builtin').keymaps() end, desc = '[S]earch [K]eymaps' },
-    { '<leader>sf', function() require('redfoxd.telescope.telescope_roots').project_find_files() end, desc = '[S]earch [F]iles' },
-    { '<leader>sF', function() require('redfoxd.telescope.telescope_roots').global_find_files() end, desc = '[S]earch [F]iles (Global)' },
-    { '<leader>ss', function() require('telescope.builtin').builtin() end, desc = '[S]earch [S]elect Telescope' },
-    { '<leader>sw', function() require('telescope.builtin').grep_string() end, desc = '[S]earch current [W]ord' },
-    { '<leader>sg', function() require('redfoxd.telescope.telescope_roots').project_live_grep() end, desc = '[S]earch by [G]rep' },
-    { '<leader>sG', function() require('redfoxd.telescope.telescope_roots').global_live_grep() end, desc = '[S]earch by [G]rep (Global)' },
-    { '<leader>sd', function() require('telescope.builtin').diagnostics() end, desc = '[S]earch [D]iagnostics' },
-    { '<leader>sr', function() require('telescope.builtin').resume() end, desc = '[S]earch [R]esume' },
-    { '<leader>s.', function() require('telescope.builtin').oldfiles() end, desc = '[S]earch Recent Files ("." for repeat)' },
-    { '<leader><leader>', function() require('telescope.builtin').buffers() end, desc = '[ ] Find existing buffers' },
-    { '<leader>m', function() require('telescope.builtin').man_pages() end, desc = '[S]earch man pages' },
-    { '<leader>/', function()
-      require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-        winblend = 10,
-        previewer = false,
-      })
-    end, desc = '[/] Fuzzily search in current buffer' },
-    { '<leader>s/', function()
-      require('telescope.builtin').live_grep {
-        grep_open_files = true,
-        prompt_title = 'Live Grep in Open Files',
-      }
-    end, desc = '[S]earch [/] in Open Files' },
-    { '<leader>sn', function()
-      require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' }
-    end, desc = '[S]earch [N]eovim files' },
+    {
+      '<leader>sh',
+      function()
+        require('telescope.builtin').help_tags()
+      end,
+      desc = '[S]earch [H]elp',
+    },
+    {
+      '<leader>sk',
+      function()
+        require('telescope.builtin').keymaps()
+      end,
+      desc = '[S]earch [K]eymaps',
+    },
+    {
+      '<leader>sf',
+      function()
+        require('redfoxd.telescope.telescope_roots').project_find_files()
+      end,
+      desc = '[S]earch [F]iles',
+    },
+    {
+      '<leader>sF',
+      function()
+        require('redfoxd.telescope.telescope_roots').global_find_files()
+      end,
+      desc = '[S]earch [F]iles (Global)',
+    },
+    {
+      '<leader>ss',
+      function()
+        require('telescope.builtin').builtin()
+      end,
+      desc = '[S]earch [S]elect Telescope',
+    },
+    {
+      '<leader>sw',
+      function()
+        require('telescope.builtin').grep_string()
+      end,
+      desc = '[S]earch current [W]ord',
+    },
+    {
+      '<leader>sg',
+      function()
+        require('redfoxd.telescope.telescope_roots').project_live_grep()
+      end,
+      desc = '[S]earch by [G]rep',
+    },
+    {
+      '<leader>sG',
+      function()
+        require('redfoxd.telescope.telescope_roots').global_live_grep()
+      end,
+      desc = '[S]earch by [G]rep (Global)',
+    },
+    {
+      '<leader>sd',
+      function()
+        require('telescope.builtin').diagnostics()
+      end,
+      desc = '[S]earch [D]iagnostics',
+    },
+    {
+      '<leader>sr',
+      function()
+        require('telescope.builtin').resume()
+      end,
+      desc = '[S]earch [R]esume',
+    },
+    {
+      '<leader>s.',
+      function()
+        require('telescope.builtin').oldfiles()
+      end,
+      desc = '[S]earch Recent Files ("." for repeat)',
+    },
+    {
+      '<leader><leader>',
+      function()
+        require('telescope.builtin').buffers()
+      end,
+      desc = '[ ] Find existing buffers',
+    },
+    {
+      '<leader>m',
+      function()
+        require('telescope.builtin').man_pages()
+      end,
+      desc = '[S]earch man pages',
+    },
+    {
+      '<leader>/',
+      function()
+        require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+          winblend = 10,
+          previewer = false,
+        })
+      end,
+      desc = '[/] Fuzzily search in current buffer',
+    },
+    {
+      '<leader>s/',
+      function()
+        require('telescope.builtin').live_grep {
+          grep_open_files = true,
+          prompt_title = 'Live Grep in Open Files',
+        }
+      end,
+      desc = '[S]earch [/] in Open Files',
+    },
+    {
+      '<leader>sn',
+      function()
+        require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' }
+      end,
+      desc = '[S]earch [N]eovim files',
+    },
     -- Git with Telescope
-    { '<leader>gs', function() require('telescope.builtin').git_status() end, desc = '[G]it [S]tatus' },
-    { '<leader>gc', function() require('telescope.builtin').git_commits() end, desc = '[G]it [C]ommits (Project)' },
-    { '<leader>gC', function() require('telescope.builtin').git_bcommits() end, desc = '[G]it [C]ommits (Buffer)' },
-    { '<leader>gb', function() require('telescope.builtin').git_branches() end, desc = '[G]it [B]ranches' },
-    { '<leader>gS', function() require('telescope.builtin').git_stash() end, desc = '[G]it [S]tash' },
+    {
+      '<leader>gs',
+      function()
+        require('telescope.builtin').git_status()
+      end,
+      desc = '[G]it [S]tatus',
+    },
+    {
+      '<leader>gc',
+      function()
+        require('telescope.builtin').git_commits()
+      end,
+      desc = '[G]it [C]ommits (Project)',
+    },
+    {
+      '<leader>gC',
+      function()
+        require('telescope.builtin').git_bcommits()
+      end,
+      desc = '[G]it [C]ommits (Buffer)',
+    },
+    {
+      '<leader>gb',
+      function()
+        require('telescope.builtin').git_branches()
+      end,
+      desc = '[G]it [B]ranches',
+    },
+    {
+      '<leader>gS',
+      function()
+        require('telescope.builtin').git_stash()
+      end,
+      desc = '[G]it [S]tash',
+    },
   },
   config = function()
     -- Telescope is a fuzzy finder that comes with a lot of different things that
