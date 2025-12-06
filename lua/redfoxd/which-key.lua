@@ -55,11 +55,17 @@ return { -- Useful plugin to show you pending keybinds.
     },
 
     -- Document existing key chains
+    -- REFACTOR: Added new semantic groups for better organization.
     spec = {
-      { '<leader>l', group = '[L]SP', mode = { 'n', 'x' } },
-      { '<leader>s', group = '[S]earch' },
-      { '<leader>t', group = '[T]oggle' },
+      { '<leader>e', group = '[E]xplorer' }, -- For Neo-tree
+      { '<leader>g', group = '[G]it' },      -- For Neogit and general git actions
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+      { '<leader>l', group = '[L]SP', mode = { 'n', 'x' } },
+      { '<leader>s', group = '[S]earch' },   -- For Telescope and Flash
+      { '<leader>t', group = '[T]oggle' },
+      { '<leader>x', group = 'Diagno[X]tics/Trouble' }, -- For Trouble.nvim
+      { '<leader>w', group = '[W]indows' },   -- For window management
+      { '<leader>b', group = '[B]uffers' },   -- For buffer management
       { '<leader>d', group = '[D]ebug' },
     },
   },
