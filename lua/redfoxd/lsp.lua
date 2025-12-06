@@ -8,6 +8,9 @@ return { -- LSP Configuration & Plugins
     'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
 
+    -- SchemaStore for jsonls and yamlls
+    { 'b0o/SchemaStore.nvim', version = false },
+
     -- Useful status updates for LSP.
     { 'j-hui/fidget.nvim', opts = {} },
     {
@@ -36,22 +39,6 @@ return { -- LSP Configuration & Plugins
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
       callback = function(event)
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-        local active_clients = vim.lsp.get_clients()
-        -- if client and client.name == 'denols' then
-        --   for _, client_ in pairs(active_clients) do
-        --     -- stop tsserver if denols is already active
-        --     if client_.name == 'ts_ls' then
-        --       client_.stop(client_)
-        --     end
-        --   end
-        -- elseif client and client.name == 'ts_ls' then
-        --   for _, client_ in pairs(active_clients) do
-        --     -- prevent tsserver from starting if denols is already active
-        --     if client_.name == 'denols' then
-        --       client.stop(client)
-        --     end
-        --   end
-        -- end
         -- NOTE: Remember that Lua is a real programming language, and as such it is possible
         -- to define small helper and utility functions so you don't have to repeat yourself.
         --
@@ -118,10 +105,23 @@ return { -- LSP Configuration & Plugins
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
         end
 
+        if client and client.server_capabilities.signatureHelpProvider then
+          map('K', vim.lsp.buf.signature_help, 'Signature Documentation', 'i')
+        end
+
         -- WARN: This is not Goto Definition, this is Goto Declaration.
         --  For example, in C this would take you to the header.
         if client and client.server_capabilities.declarationProvider then
           map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+        end
+
+        if client and client.server_capabilities.documentFormattingProvider then
+          map('<leader>lf', vim.lsp.buf.format, '[L]SP [F]ormat')
+        end
+
+        if client and client.server_capabilities.callHierarchyProvider then
+          map('g<', require('telescope.builtin').lsp_incoming_calls, 'Goto Incoming Calls')
+          map('g>', require('telescope.builtin').lsp_outgoing_calls, 'Goto Outgoing Calls')
         end
 
         -- The following two autocommands are used to highlight references of the
@@ -195,7 +195,54 @@ return { -- LSP Configuration & Plugins
     require('mason-lspconfig').setup {
       ensure_installed = {},
       automatic_enable = true,
+      handlers = {
+        denols = function()
+          vim.lsp.config.denols.setup({
+            root_dir = function(fname)
+              return vim.lsp.util.root_pattern('deno.json', 'deno.jsonc')(fname)
+            end,
+            init_options = {
+              lint = true,
+              unstable = true,
+              suggest = {
+                imports = {
+                  hosts = {
+                    ['https://deno.land'] = true,
+                    ['https://cdn.nest.land'] = true,
+                    ['https://crux.land'] = true,
+                  },
+                },
+              },
+            },
+            capabilities = capabilities,
+          })
+        end,
+        tsserver = function()
+          vim.lsp.config.tsserver.setup({
+            root_dir = function(fname)
+              local is_deno_project = vim.lsp.util.root_pattern('deno.json', 'deno.jsonc')(fname)
+              if is_deno_project then
+                return nil
+              end
+              return vim.lsp.util.root_pattern(
+                'package.json',
+                'tsconfig.json',
+                'jsconfig.json',
+                '.git'
+              )(fname) or vim.lsp.util.find_git_ancestor(fname)
+            end,
+            capabilities = capabilities,
+          })
+        end,
+        -- For any server not explicitly handled, use the default setup function
+        ['*'] = function(server_name)
+          vim.lsp.config[server_name].setup({
+            capabilities = capabilities,
+          })
+        end,
+      },
     }
+
     vim.lsp.config('*', {
       capabilities = capabilities,
     })
