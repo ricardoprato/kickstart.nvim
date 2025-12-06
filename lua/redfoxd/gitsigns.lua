@@ -60,7 +60,7 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
       end, { desc = 'git [D]iff against last commit' })
       map('n', '<leader>gb', gitsigns.blame_line, { desc = 'git [g]lobal [b]lame line' })
       map('n', '<leader>gB', gitsigns.toggle_current_line_blame, { desc = 'git [g]lobal toggle [B]lame' })
-      map('n', '<leader>gd', gitsigns.show_line_diff, { desc = 'git [g]lobal [d]iff line' })
+      map('n', '<leader>gd', function() gitsigns.diffthis '~' end, { desc = 'git [g]lobal [d]iff line' })
       map('n', '<leader>gn', function() gitsigns.nav_hunk 'next' end, { desc = 'git [g]lobal [n]ext hunk' })
       map('n', '<leader>gp', function() gitsigns.nav_hunk 'prev' end, { desc = 'git [g]lobal [p]revious hunk' })
       -- Toggles
