@@ -56,23 +56,23 @@ function M.config()
     map('n', '<leader>gg', function()
       local repo_path = git_utils.get_git_repo_path()
       toggle_term_cmd { cmd = 'lazygit', dir = repo_path }
-    end, { desc = 'lazy[g]it' })
+    end, { desc = 'Toggle lazy[g]it' })
   end
   if vim.fn.executable 'lazydocker' == 1 then
-    map('n', '<leader>td', function()
+    map('n', '<leader>ud', function()
       toggle_term_cmd 'lazydocker'
-    end, { desc = '[T]oggle lazy[d]ocker' })
+    end, { desc = 'Toggle lazy[d]ocker' })
   end
   if vim.fn.executable 'node' == 1 then
-    map('n', '<leader>tn', function()
+    map('n', '<leader>un', function()
       toggle_term_cmd 'node'
-    end, { desc = '[T]oggle [n]ode' })
+    end, { desc = 'Toggle [n]ode' })
   end
   local python = vim.fn.executable 'python' == 1 and 'python' or vim.fn.executable 'python3' == 1 and 'python3'
   if python then
-    map('n', '<leader>tp', function()
+    map('n', '<leader>up', function()
       toggle_term_cmd(python)
-    end, { desc = '[T]oggle [p]ython' })
+    end, { desc = 'Toggle [p]ython' })
   end
 end
 
