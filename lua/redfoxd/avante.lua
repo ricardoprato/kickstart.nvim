@@ -6,8 +6,24 @@ return {
   ---@module 'avante'
   ---@type avante.Config
   opts = {
+    input = {
+      provider = 'dressing',
+      provider_opts = {},
+    },
     provider = 'copilot', -- Recommend using Claude
     auto_suggestions_provider = 'copilot',
+    acp_providers = {
+      ['gemini-cli'] = {
+        command = 'gemini',
+        args = {
+          '--experimental-acp',
+          '--allowed-tools=ShellTool',
+        },
+        env = {
+          NODE_NO_WARNINGS = '1',
+        },
+      },
+    },
   },
   build = 'make',
   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
