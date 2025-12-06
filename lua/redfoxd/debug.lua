@@ -15,6 +15,11 @@ return {
     { 'jay-babu/mason-nvim-dap.nvim' },
     { 'theHamsta/nvim-dap-virtual-text', opts = {} },
     { 'mfussenegger/nvim-dap-python' },
+    {
+      'mxsdev/nvim-dap-vscode-js',
+      ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
+      dependencies = { 'mfussenegger/nvim-dap' },
+    },
   },
   config = function()
     local dap = require 'dap'
@@ -25,7 +30,7 @@ return {
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
       -- reasonable debug configurations
-      automatic_installation = false,
+      automatic_installation = true,
 
       -- You can provide additional configuration to the handlers,
       -- see mason-nvim-dap README for more information
@@ -34,8 +39,8 @@ return {
       -- You'll need to check that you have the required things installed
       -- online, please don't ask me how to install them :)
       ensure_installed = {
-        -- Update this to ensure that you have the debuggers for the langs you want
-        -- 'delve',
+        'debugpy', -- For Python (Odoo)
+        'js-debug-adapter', -- For Node.js and Deno
       },
     }
     map('v', '<F2>', dapui.eval, { desc = 'Debug: Evaluate Input' })
@@ -148,6 +153,102 @@ return {
         max_value_lines = 100,
       },
     }
+
+    -- Setup js-debug-adapter for Node.js and Deno
+    require('dap-vscode-js').setup({
+      node_path = 'node', -- Path to node executable.
+      -- debugger_path = "(runtimedir)/lib/node_modules/vscode-js-debug", -- Path to vscode-js-debug installation.
+      -- works in windows and linux
+      debugger_path = (function()
+        local mason_path = vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter/extension/out/src'
+        if vim.fn.isdirectory(mason_path) then
+          return mason_path
+        end
+        return nil
+      end)(),
+      adapters = { 'pwa-node', 'pwa-deno', 'pwa-msedge', 'pwa-chrome' }, -- which adapters to register
+      log_file = vim.fn.stdpath('cache') .. '/dap_vscode_js.log',
+      log_level = 'OFF', --
+      -- If you want to use this with an existing `package.json`
+      -- it's suggested to use the `dap-vscode-js` command to create a `launch.json`
+      -- then convert it to a lua configuration.
+    })
+
+    -- DAP configurations for Node.js
+    -- ... existing code ...
+
+    local function is_deno_project()
+      local current_file = vim.api.nvim_buf_get_name(0)
+      if current_file == "" then return false end
+      local current_dir = vim.fn.fnamemodify(current_file, ':h')
+      local util = require('lspconfig.util') -- Re-use util from lspconfig for root_pattern
+      return util.root_pattern('deno.json', 'deno.jsonc')(current_dir) ~= nil
+    end
+
+    -- DAP configurations for Node.js and Deno (unified)
+    -- We will redefine typescript and javascript configurations to be dynamic
+    dap.configurations.javascript = {
+      {
+        type = 'pwa-node',
+        request = 'launch',
+        name = 'Launch file (Node.js)',
+        program = '${file}',
+        cwd = '${workspaceFolder}',
+        console = 'integratedTerminal',
+        condition = function() return not is_deno_project() end,
+      },
+      {
+        type = 'pwa-deno',
+        request = 'launch',
+        name = 'Launch Deno file',
+        program = '${file}',
+        cwd = '${workspaceFolder}',
+        console = 'integratedTerminal',
+        runtimeExecutable = 'deno',
+        runtimeArgs = { 'run', '--inspect', '--allow-all' },
+        condition = is_deno_project,
+      },
+      -- Attach to process for Node.js
+      {
+        type = 'pwa-node',
+        request = 'attach',
+        name = 'Attach to process (Node.js)',
+        processId = require('dap.utils').pick_process,
+        cwd = '${workspaceFolder}',
+        console = 'integratedTerminal',
+        condition = function() return not is_deno_project() end,
+      },
+      -- Launch with nodemon for Node.js
+      {
+        type = 'pwa-node',
+        request = 'launch',
+        name = 'Launch with nodemon (Node.js)',
+        program = '${file}',
+        runtimeExecutable = 'nodemon',
+        args = {
+          '--nolazy',
+          '--inspect-brk=9229',
+          '--exec',
+          'node',
+          '${file}',
+        },
+        console = 'integratedTerminal',
+        cwd = '${workspaceFolder}',
+        protocol = 'inspector',
+        sourceMaps = true,
+        trace = true,
+        port = 9229,
+        skipFiles = { '<node_internals>/**', 'node_modules/**' },
+        condition = function() return not is_deno_project() end,
+      },
+    }
+    -- Alias typescript configs to javascript, they will also use the condition
+    dap.configurations.typescript = dap.configurations.javascript
+    dap.configurations.typescriptreact = dap.configurations.javascript
+    dap.configurations.javascriptreact = dap.configurations.javascript
+
+    -- Remove the explicit `dap.configurations.deno` as it's now handled by `javascript` and `typescript` with conditions
+    -- dap.configurations.deno = { ... } -- THIS BLOCK WILL BE REMOVED
 
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
     vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
