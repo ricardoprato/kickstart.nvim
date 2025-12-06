@@ -197,7 +197,7 @@ return { -- LSP Configuration & Plugins
       automatic_enable = true,
       handlers = {
         denols = function()
-          vim.lsp.config.denols.setup({
+          vim.lsp.config.denols.setup {
             root_dir = function(fname)
               return vim.lsp.util.root_pattern('deno.json', 'deno.jsonc')(fname)
             end,
@@ -215,30 +215,25 @@ return { -- LSP Configuration & Plugins
               },
             },
             capabilities = capabilities,
-          })
+          }
         end,
         tsserver = function()
-          vim.lsp.config.tsserver.setup({
+          vim.lsp.config.tsserver.setup {
             root_dir = function(fname)
               local is_deno_project = vim.lsp.util.root_pattern('deno.json', 'deno.jsonc')(fname)
               if is_deno_project then
                 return nil
               end
-              return vim.lsp.util.root_pattern(
-                'package.json',
-                'tsconfig.json',
-                'jsconfig.json',
-                '.git'
-              )(fname) or vim.lsp.util.find_git_ancestor(fname)
+              return vim.lsp.util.root_pattern('package.json', 'tsconfig.json', 'jsconfig.json', '.git')(fname) or vim.lsp.util.find_git_ancestor(fname)
             end,
             capabilities = capabilities,
-          })
+          }
         end,
         -- For any server not explicitly handled, use the default setup function
         ['*'] = function(server_name)
-          vim.lsp.config[server_name].setup({
+          vim.lsp.config[server_name].setup {
             capabilities = capabilities,
-          })
+          }
         end,
       },
     }
