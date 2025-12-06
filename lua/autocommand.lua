@@ -41,3 +41,29 @@ autocmd('BufWinEnter', {
     end
   end,
 })
+
+-- Autosave on FocusLost or BufModifiedSet
+-- Initialize buffer-local autosave setting
+autocmd({ "BufNewFile", "BufReadPost" }, {
+  group = augroup "autosave_init",
+  callback = function()
+    vim.b.disable_autosave = vim.g.disable_autosave
+  end,
+})
+
+autocmd({ "BufModifiedSet", "FocusLost" }, {
+  group = augroup "autosave",
+  callback = function()
+    if not vim.b.disable_autosave and vim.bo.buftype == "" and vim.bo.modifiable and vim.bo.modified then
+      vim.cmd.write()
+    end
+  end,
+})
+
+-- Initialize buffer-local autoformat setting
+autocmd({ "BufNewFile", "BufReadPost" }, {
+  group = augroup "autoformat_init",
+  callback = function()
+    vim.b.disable_autoformat = vim.g.disable_autoformat
+  end,
+})
