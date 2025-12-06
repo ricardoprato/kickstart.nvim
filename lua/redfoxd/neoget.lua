@@ -11,6 +11,6 @@ return {
     },
   },
   keys = {
-    { '<leader>ln', ':lua require("neogen").generate()<CR>', desc = '[N]eogen' },
+    { '<leader>cn', ':lua require("neogen").generate()<CR>', desc = 'Generate Annotations ([N]eogen)' },
   },
 }

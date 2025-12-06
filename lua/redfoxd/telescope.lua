@@ -116,7 +116,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
       desc = '[ ] Find existing buffers',
     },
     {
-      '<leader>m',
+      '<leader>sm',
       function()
         require('telescope.builtin').man_pages()
       end,

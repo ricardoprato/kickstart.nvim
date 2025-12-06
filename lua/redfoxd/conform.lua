@@ -4,7 +4,7 @@ return { -- Autoformat
   cmd = { 'ConformInfo' },
   keys = {
     {
-      '<leader>f',
+      '<leader>cf',
       function()
         require('conform').format({ async = true, lsp_format = 'fallback' }, function(err)
           if not err then
@@ -18,16 +18,6 @@ return { -- Autoformat
       mode = '',
       desc = '[F]ormat buffer',
     },
-    {
-      '<leader>tf',
-      function()
-        print(vim.g.disable_autoformat)
-        vim.g.disable_autoformat = not vim.g.disable_autoformat
-        print(vim.g.disable_autoformat)
-      end,
-      mode = '',
-      desc = '[T]oggle Auto-[F]ormat buffer',
-    },
   },
   -- This will provide type hinting with LuaLS
   ---@module "conform"
@@ -39,7 +29,7 @@ return { -- Autoformat
       -- have a well standardized coding style. You can add additional
       -- languages here or re-enable it for the disabled ones.
       local disable_filetypes = { c = true, cpp = true }
-      if disable_filetypes[vim.bo[bufnr].filetype] or vim.g.disable_autoformat then
+      if disable_filetypes[vim.bo[bufnr].filetype] or vim.b.disable_autoformat then
         return
       end
       return {

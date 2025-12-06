@@ -54,10 +54,6 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
         gitsigns.diffthis '@'
       end, { desc = 'git [D]iff against last commit' })
       map('n', '<leader>gb', gitsigns.blame_line, { desc = 'git [g]lobal [b]lame line' })
-      map('n', '<leader>gB', gitsigns.toggle_current_line_blame, { desc = 'git [g]lobal toggle [B]lame' })
-      map('n', '<leader>gd', function()
-        gitsigns.diffthis '~'
-      end, { desc = 'git [g]lobal [d]iff line' })
       map('n', '<leader>gn', function()
         gitsigns.nav_hunk 'next'
       end, { desc = 'git [g]lobal [n]ext hunk' })
@@ -67,13 +63,13 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
 
       map('n', '<leader>hQ', function()
         gitsigns.setqflist 'all'
-      end)
-      map('n', '<leader>hq', gitsigns.setqflist)
+      end, { desc = 'Add all changed files to Quickfix list' })
+      map('n', '<leader>hq', gitsigns.setqflist, { desc = 'Add changed files to Quickfix list' })
 
       -- Toggles
-      map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
-      map('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
-      map('n', '<leader>tw', gitsigns.toggle_word_diff)
+      map('n', '<leader>ub', gitsigns.toggle_current_line_blame, { desc = 'Toggle git show [b]lame line' })
+      map('n', '<leader>uD', gitsigns.toggle_deleted, { desc = 'Toggle git show [D]eleted' })
+      map('n', '<leader>uw', gitsigns.toggle_word_diff, { desc = 'Toggle [w]ord diff' })
 
       -- Text object
       map({ 'o', 'x' }, 'ih', gitsigns.select_hunk)
