@@ -14,12 +14,8 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
     },
     on_attach = function(bufnr)
       local gitsigns = require 'gitsigns'
-
-      local function map(mode, l, r, opts)
-        opts = opts or {}
-        opts.buffer = bufnr
-        vim.keymap.set(mode, l, r, opts)
-      end
+      local utils = require 'utils'
+      local map = utils.map
 
       -- Navigation
       map('n', ']c', function()
@@ -50,7 +46,6 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
       map('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'git [s]tage hunk' })
       map('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'git [r]eset hunk' })
       map('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'git [S]tage buffer' })
-      map('n', '<leader>hu', gitsigns.unstage_hunk, { desc = 'git [u]nstage hunk' })
       map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
       map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
       map('n', '<leader>hb', gitsigns.blame_line, { desc = 'git [b]lame line' })
@@ -60,12 +55,28 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
       end, { desc = 'git [D]iff against last commit' })
       map('n', '<leader>gb', gitsigns.blame_line, { desc = 'git [g]lobal [b]lame line' })
       map('n', '<leader>gB', gitsigns.toggle_current_line_blame, { desc = 'git [g]lobal toggle [B]lame' })
-      map('n', '<leader>gd', function() gitsigns.diffthis '~' end, { desc = 'git [g]lobal [d]iff line' })
-      map('n', '<leader>gn', function() gitsigns.nav_hunk 'next' end, { desc = 'git [g]lobal [n]ext hunk' })
-      map('n', '<leader>gp', function() gitsigns.nav_hunk 'prev' end, { desc = 'git [g]lobal [p]revious hunk' })
+      map('n', '<leader>gd', function()
+        gitsigns.diffthis '~'
+      end, { desc = 'git [g]lobal [d]iff line' })
+      map('n', '<leader>gn', function()
+        gitsigns.nav_hunk 'next'
+      end, { desc = 'git [g]lobal [n]ext hunk' })
+      map('n', '<leader>gp', function()
+        gitsigns.nav_hunk 'prev'
+      end, { desc = 'git [g]lobal [p]revious hunk' })
+
+      map('n', '<leader>hQ', function()
+        gitsigns.setqflist 'all'
+      end)
+      map('n', '<leader>hq', gitsigns.setqflist)
+
       -- Toggles
       map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
       map('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
+      map('n', '<leader>tw', gitsigns.toggle_word_diff)
+
+      -- Text object
+      map({ 'o', 'x' }, 'ih', gitsigns.select_hunk)
     end,
   },
 }

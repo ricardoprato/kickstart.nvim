@@ -1,7 +1,7 @@
 require 'options'
 require 'keymaps'
 require 'autocommand'
-require('lazy-bootstrap')
+require 'lazy-bootstrap'
 
 -- Highlight todo, notes, etc in comments
 -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
