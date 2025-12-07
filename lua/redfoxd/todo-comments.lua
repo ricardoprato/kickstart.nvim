@@ -1,6 +1,6 @@
 return {
   'folke/todo-comments.nvim',
-  event = { 'BufReadPost', 'BufNewFile', 'BufWritePre', 'VeryLazy' },
+  event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
   cmd = { 'TodoTrouble', 'TodoTelescope' },
   keys = {
     {
@@ -22,4 +22,5 @@ return {
     { '<leader>st', '<cmd>TodoTelescope<cr>', desc = 'Todo' },
     { '<leader>sT', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme' },
   },
+  opts = {},
 }

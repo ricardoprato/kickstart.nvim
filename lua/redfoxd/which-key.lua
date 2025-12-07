@@ -69,6 +69,7 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>w', group = 'Windows' }, -- For window management
       { '<leader>b', group = 'Buffers' }, -- For buffer management
       { '<leader>d', group = 'Debug' },
+      { '<leader>z', group = 'Fold' }, -- Folding stuff
     },
   },
 }

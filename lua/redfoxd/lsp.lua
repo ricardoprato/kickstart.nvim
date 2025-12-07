@@ -160,6 +160,11 @@ return { -- LSP Configuration & Plugins
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
           end, 'Toggle Inlay [H]ints')
         end
+
+        if client:supports_method 'textDocument/foldingRange' then
+          local win = vim.api.nvim_get_current_win()
+          vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+        end
       end,
     })
 

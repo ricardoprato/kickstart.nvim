@@ -3,7 +3,7 @@
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 vim.g.disable_autoformat = false
-vim.g.disable_autosave = false
+vim.g.disable_autosave = true
 
 -- Make line numbers default
 vim.opt.number = true
@@ -19,7 +19,7 @@ vim.opt.showmode = false
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.opt.clipboard = 'unnamedplus'
+vim.opt.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- Sync with system clipboard
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -57,6 +57,9 @@ vim.opt.inccommand = 'split'
 -- Show which line your cursor is on
 vim.opt.cursorline = true
 
+-- Use spaces instead of tabs
+vim.opt.expandtab = true
+
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
@@ -68,3 +71,19 @@ vim.opt.hlsearch = true
 
 -- views can only be fully collapsed with the global statusline
 vim.opt.laststatus = 3
+
+vim.opt.autowrite = true -- Enable auto write
+
+-- Fold
+vim.opt.foldmethod = 'expr'
+-- Default to treesitter folding
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldlevel = 99
+vim.opt.fillchars = {
+  foldopen = '',
+  foldclose = '',
+  fold = ' ',
+  foldsep = ' ',
+  diff = '╱',
+  eob = ' ',
+}
