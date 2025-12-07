@@ -41,8 +41,8 @@ map('n', '<leader>wv', '<cmd>vsplit<CR>', { desc = '[W]indow [V]ertical split' }
 map('n', '<leader>wc', '<cmd>close<CR>', { desc = '[W]indow [C]lose' })
 map('n', '<leader>wo', '<cmd>only<CR>', { desc = '[W]indow [O]nly (close others)' })
 map('n', '<leader>wh', '<C-w>h', { desc = '[W]indow move [H]left' })
-map('n', '<leader>wj', '<C-w>j', { desc = '[W]indow move [J]down' })
-map('n', '<leader>wk', '<C-w>k', { desc = '[W]indow move [K]up' })
+map('n', '<leader>wj', '<C-w>j', { desc = 'Move [W]indow [J]down' })
+map('n', '<leader>wk', '<C-w>k', { desc = 'Move [W]indow [K]up' })
 map('n', '<leader>wl', '<C-w>l', { desc = 'Move [W]indow [L]right' })
 map('n', '<leader>wr', '<C-w>r', { desc = '[W]indow [R]otate (swap)' })
 
@@ -95,14 +95,13 @@ map('n', 'tt', '<cmd>t.<CR>', { desc = 'Duplicate current line' })
 map('n', '<leader>bd', '<cmd>bdelete<CR>', { desc = '[B]uffer [D]elete' })
 map('n', '<leader>bp', '<cmd>bprevious<CR>', { desc = '[B]uffer (previous)' })
 map('n', '<leader>bn', '<cmd>bnext<CR>', { desc = '[B]uffer (next)' })
-map('n', '<leader>bb', '<cmd>Telescope buffers<CR>', { desc = '[B]uffer [B]rowser (Telescope)' })
 map('n', '[b', '<cmd>bprevious<CR>', { desc = '[B]uffer Previous' })
 map('n', ']b', '<cmd>bnext<CR>', { desc = '[B]uffer Next' })
 
 -- [[ Editing / Movement ]]
 -- Move current line / block with Alt-j/k
 map('n', '<A-k>', '<cmd>m .-2<CR>', { desc = 'Move line up' })
-map('n', '<A-j>', '<cmd>m .+1<CR>', { desc = 'Move line down' })
+map('n', '<A-j>', '<cmd>m .+1<CR>', { desc = 'Move line down (Insert Mode)' })
 map('i', '<A-k>', '<cmd>m .-2<CR>', { desc = 'Move line up (Insert Mode)' })
 map('i', '<A-j>', '<cmd>m .+1<CR>', { desc = 'Move line down (Insert Mode)' })
 map('v', '<A-k>', ":move '<-2<CR>gv=gv", { desc = 'Move selection up' })
@@ -129,15 +128,10 @@ map('n', ']d', function()
   vim.diagnostic.jump { count = 1, float = true }
 end, { desc = 'Go to next [D]iagnostic message' })
 map('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'Line Diagnostics' })
-map('n', '<leader>xd', function()
-  require('telescope.builtin').diagnostics()
-end, { desc = 'Open diagnostics in telescope' })
-map('n', '<leader>xt', function()
-  require('trouble').toggle()
-end, { desc = 'Open diagnostics in trouble' })
 
 map('n', ']q', '<cmd>cnext<CR>', { desc = 'Next Quickfix item' })
 map('n', '[q', '<cmd>cprev<CR>', { desc = 'Previous Quickfix item' })
 map('n', '<C-q>', function()
   utils.QuickFixToggle()
 end, { desc = 'Toggle Quickfix list' })
+

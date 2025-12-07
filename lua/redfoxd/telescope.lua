@@ -215,6 +215,20 @@ return { -- Fuzzy Finder (files, lsp, etc)
       end,
       desc = '[G]it [S]tash',
     },
+    {
+      '<leader>bb',
+      function()
+        require('telescope.builtin').buffers()
+      end,
+      desc = '[B]uffer [B]rowser (Telescope)',
+    },
+    {
+      '<leader>xd',
+      function()
+        require('telescope.builtin').diagnostics()
+      end,
+      desc = 'Open diagnostics in telescope',
+    },
   },
   config = function()
     -- Telescope is a fuzzy finder that comes with a lot of different things that
