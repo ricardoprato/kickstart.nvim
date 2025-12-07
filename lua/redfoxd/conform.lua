@@ -33,10 +33,15 @@ return { -- Autoformat
         return
       end
       return {
-        timeout_ms = 500,
+        timeout_ms = 2000,
         lsp_format = 'fallback',
       }
     end,
+    formatters = {
+      black = {
+        prepend_args = { '--fast' },
+      },
+    },
     formatters_by_ft = {
       lua = { 'stylua' },
       python = { 'isort', 'black' },

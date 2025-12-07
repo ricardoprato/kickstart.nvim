@@ -11,7 +11,7 @@ return {
   dependencies = {
     { 'rcarriga/nvim-dap-ui' },
     { 'nvim-neotest/nvim-nio' },
-    { 'williamboman/mason.nvim' },
+    { 'williamboman/mason.nvim', keys = { '<leader>cm>', '<cmd>Mason<CR>', desc = '[M]ason' } },
     { 'jay-babu/mason-nvim-dap.nvim' },
     { 'theHamsta/nvim-dap-virtual-text', opts = {} },
     { 'mfussenegger/nvim-dap-python' },
@@ -22,33 +22,197 @@ return {
     },
   },
   keys = {
-    { '<F2>', function() require('dapui').eval() end, mode = 'v', desc = 'Debug: Evaluate Input' },
-    { '<F5>', function() require('dap').continue() end, desc = 'Debug: Start/Continue' },
-    { '<S-F5>', function() require('dap').terminate() end, desc = 'Debug: Stop' },
-    { '<C-F5>', function() require('dap').restart_frame() end, desc = 'Debug: Restart' },
-    { '<F6>', function() require('dap').pause() end, desc = 'Debug: Pause' },
-    { '<F9>', function() require('dap').toggle_breakpoint() end, desc = 'Debug: Toggle Breakpoint' },
-    { '<S-F9>', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, desc = 'Debug: Set Breakpoint' },
-    { '<F10>', function() require('dap').step_over() end, desc = 'Debug: Step Over' },
-    { '<F11>', function() require('dap').step_into() end, desc = 'Debug: Step Into' },
-    { '<S-F11>', function() require('dap').step_out() end, desc = 'Debug: Step Out' },
-    { '<leader>du', function() require('dapui').toggle() end, desc = 'Debug: Toggle Debug UI' },
-    { '<leader>dh', function() require('dap.ui.widgets').hover() end, desc = 'Debug: Hover' },
-    { '<leader>de', function() require('dapui').eval() end, mode = 'v', desc = 'Debug: Evaluate Input' },
-    { '<leader>da', function() require('dap').set_exception_breakpoints() end, desc = 'Debug: Set Exception Breakpoints' },
-    { '<leader>dc', function() require('dap').continue() end, desc = 'Debug: Start/Continue' },
-    { '<leader>dQ', function() require('dap').terminate() end, desc = 'Debug: Stop' },
-    { '<leader>dr', function() require('dap').restart() end, desc = 'Debug: Restart' },
-    { '<leader>dp', function() require('dap').pause() end, desc = 'Debug: Pause' },
-    { '<leader>dR', function() require('dap').repl.toggle() end, desc = 'Debug: Toggle REPL' },
-    { '<leader>ds', function() require('dap').run_to_cursor() end, desc = 'Debug: Run to Cursor' },
-    { '<leader>dB', function() require('dap').clear_breakpoints() end, desc = 'Debug: Clear Breakpoints' },
-    { '<leader>db', function() require('dap').toggle_breakpoint() end, desc = 'Debug: Toggle Breakpoint' },
-    { '<leader>dC', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, desc = 'Debug: Set Conditional Breakpoint' },
-    { '<leader>do', function() require('dap').step_over() end, desc = 'Debug: Step Over' },
-    { '<leader>di', function() require('dap').step_into() end, desc = 'Debug: Step Into' },
-    { '<leader>dO', function() require('dap').step_out() end, desc = 'Debug: Step Out' },
-    { '<F7>', function() require('dapui').toggle() end, desc = 'Debug: Toggle UI' },
+    {
+      '<F2>',
+      function()
+        require('dapui').eval()
+      end,
+      mode = 'v',
+      desc = 'Debug: Evaluate Input',
+    },
+    {
+      '<F5>',
+      function()
+        require('dap').continue()
+      end,
+      desc = 'Debug: Start/Continue',
+    },
+    {
+      '<S-F5>',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Debug: Stop',
+    },
+    {
+      '<C-F5>',
+      function()
+        require('dap').restart_frame()
+      end,
+      desc = 'Debug: Restart',
+    },
+    {
+      '<F6>',
+      function()
+        require('dap').pause()
+      end,
+      desc = 'Debug: Pause',
+    },
+    {
+      '<F9>',
+      function()
+        require('dap').toggle_breakpoint()
+      end,
+      desc = 'Debug: Toggle Breakpoint',
+    },
+    {
+      '<S-F9>',
+      function()
+        require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+      end,
+      desc = 'Debug: Set Breakpoint',
+    },
+    {
+      '<F10>',
+      function()
+        require('dap').step_over()
+      end,
+      desc = 'Debug: Step Over',
+    },
+    {
+      '<F11>',
+      function()
+        require('dap').step_into()
+      end,
+      desc = 'Debug: Step Into',
+    },
+    {
+      '<S-F11>',
+      function()
+        require('dap').step_out()
+      end,
+      desc = 'Debug: Step Out',
+    },
+    {
+      '<leader>du',
+      function()
+        require('dapui').toggle()
+      end,
+      desc = 'Debug: Toggle Debug UI',
+    },
+    {
+      '<leader>dh',
+      function()
+        require('dap.ui.widgets').hover()
+      end,
+      desc = 'Debug: Hover',
+    },
+    {
+      '<leader>de',
+      function()
+        require('dapui').eval()
+      end,
+      mode = 'v',
+      desc = 'Debug: Evaluate Input',
+    },
+    {
+      '<leader>da',
+      function()
+        require('dap').set_exception_breakpoints()
+      end,
+      desc = 'Debug: Set Exception Breakpoints',
+    },
+    {
+      '<leader>dc',
+      function()
+        require('dap').continue()
+      end,
+      desc = 'Debug: Start/Continue',
+    },
+    {
+      '<leader>dQ',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Debug: Stop',
+    },
+    {
+      '<leader>dr',
+      function()
+        require('dap').restart()
+      end,
+      desc = 'Debug: Restart',
+    },
+    {
+      '<leader>dp',
+      function()
+        require('dap').pause()
+      end,
+      desc = 'Debug: Pause',
+    },
+    {
+      '<leader>dR',
+      function()
+        require('dap').repl.toggle()
+      end,
+      desc = 'Debug: Toggle REPL',
+    },
+    {
+      '<leader>ds',
+      function()
+        require('dap').run_to_cursor()
+      end,
+      desc = 'Debug: Run to Cursor',
+    },
+    {
+      '<leader>dB',
+      function()
+        require('dap').clear_breakpoints()
+      end,
+      desc = 'Debug: Clear Breakpoints',
+    },
+    {
+      '<leader>db',
+      function()
+        require('dap').toggle_breakpoint()
+      end,
+      desc = 'Debug: Toggle Breakpoint',
+    },
+    {
+      '<leader>dC',
+      function()
+        require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+      end,
+      desc = 'Debug: Set Conditional Breakpoint',
+    },
+    {
+      '<leader>do',
+      function()
+        require('dap').step_over()
+      end,
+      desc = 'Debug: Step Over',
+    },
+    {
+      '<leader>di',
+      function()
+        require('dap').step_into()
+      end,
+      desc = 'Debug: Step Into',
+    },
+    {
+      '<leader>dO',
+      function()
+        require('dap').step_out()
+      end,
+      desc = 'Debug: Step Out',
+    },
+    {
+      '<F7>',
+      function()
+        require('dapui').toggle()
+      end,
+      desc = 'Debug: Toggle UI',
+    },
   },
   config = function()
     local dap = require 'dap'
@@ -121,25 +285,27 @@ return {
       },
     }
 
-    require('dap-vscode-js').setup({
+    require('dap-vscode-js').setup {
       node_path = 'node',
       debugger_path = (function()
-        local mason_path = vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter/extension/out/src'
+        local mason_path = vim.fn.stdpath 'data' .. '/mason/packages/js-debug-adapter/extension/out/src'
         if vim.fn.isdirectory(mason_path) then
           return mason_path
         end
         return nil
       end)(),
       adapters = { 'pwa-node', 'pwa-deno', 'pwa-msedge', 'pwa-chrome' },
-      log_file = vim.fn.stdpath('cache') .. '/dap_vscode_js.log',
+      log_file = vim.fn.stdpath 'cache' .. '/dap_vscode_js.log',
       log_level = 'OFF',
-    })
+    }
 
     local function is_deno_project()
       local current_file = vim.api.nvim_buf_get_name(0)
-      if current_file == "" then return false end
+      if current_file == '' then
+        return false
+      end
       local current_dir = vim.fn.fnamemodify(current_file, ':h')
-      local util = require('lspconfig.util')
+      local util = require 'lspconfig.util'
       return util.root_pattern('deno.json', 'deno.jsonc')(current_dir) ~= nil
     end
 
@@ -151,7 +317,9 @@ return {
         program = '${file}',
         cwd = '${workspaceFolder}',
         console = 'integratedTerminal',
-        condition = function() return not is_deno_project() end,
+        condition = function()
+          return not is_deno_project()
+        end,
       },
       {
         type = 'pwa-deno',
@@ -171,7 +339,9 @@ return {
         processId = require('dap.utils').pick_process,
         cwd = '${workspaceFolder}',
         console = 'integratedTerminal',
-        condition = function() return not is_deno_project() end,
+        condition = function()
+          return not is_deno_project()
+        end,
       },
       {
         type = 'pwa-node',
@@ -193,7 +363,9 @@ return {
         trace = true,
         port = 9229,
         skipFiles = { '<node_internals>/**', 'node_modules/**' },
-        condition = function() return not is_deno_project() end,
+        condition = function()
+          return not is_deno_project()
+        end,
       },
     }
     dap.configurations.typescript = dap.configurations.javascript

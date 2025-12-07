@@ -92,12 +92,14 @@ return { -- LSP Configuration & Plugins
         --  Most Language Servers support renaming across files, etc.
         if client and client.server_capabilities.renameProvider then
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('<leader>cr', vim.lsp.buf.rename, '[R]e[n]ame')
         end
 
         -- Execute a code action, usually your cursor needs to be on top of an error
         -- or a suggestion from your LSP for this to activate.
         if client and client.server_capabilities.codeActionProvider then
           map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
+          map('<leader>ca', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
         end
 
         -- Opens a popup that displays documentation about the word under your cursor
