@@ -107,7 +107,7 @@ return { -- LSP Configuration & Plugins
         end
 
         if client and client.server_capabilities.signatureHelpProvider then
-          map('K', vim.lsp.buf.signature_help, 'Signature Documentation', 'i')
+          map('<c-k>', vim.lsp.buf.signature_help, 'Signature Documentation', 'i')
         end
 
         -- WARN: This is not Goto Definition, this is Goto Declaration.
