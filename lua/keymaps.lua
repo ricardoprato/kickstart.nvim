@@ -128,7 +128,7 @@ end, { desc = 'Go to previous [D]iagnostic message' })
 map('n', ']d', function()
   vim.diagnostic.jump { count = 1, float = true }
 end, { desc = 'Go to next [D]iagnostic message' })
-map('n', '<leader>xo', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+map('n', '<leader>cd', vim.diagnostic.open_float, { desc = 'Line Diagnostics' })
 map('n', '<leader>xd', function()
   require('telescope.builtin').diagnostics()
 end, { desc = 'Open diagnostics in telescope' })
