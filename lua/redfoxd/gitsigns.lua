@@ -2,7 +2,7 @@
 return { -- Adds git related signs to the gutter, as well as utilities for managing changes
   'lewis6991/gitsigns.nvim',
   -- REFACTOR: Lazy-load on file open events
-  event = { 'BufReadPost', 'BufNewFile' },
+  event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
   opts = {
     signs = {
       add = { text = '▎' },
