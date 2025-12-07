@@ -153,35 +153,65 @@ return { -- Fuzzy Finder (files, lsp, etc)
     {
       '<leader>gs',
       function()
-        require('telescope.builtin').git_status()
+        local git_utils = require('utils.git')
+        local repo_path = git_utils.get_git_repo_path()
+        if repo_path then
+          require('telescope.builtin').git_status({ cwd = repo_path })
+        else
+          vim.notify('Not in a Git repository.', vim.log.levels.WARN)
+        end
       end,
       desc = '[G]it [S]tatus',
     },
     {
       '<leader>gc',
       function()
-        require('telescope.builtin').git_commits()
+        local git_utils = require('utils.git')
+        local repo_path = git_utils.get_git_repo_path()
+        if repo_path then
+          require('telescope.builtin').git_commits({ cwd = repo_path })
+        else
+          vim.notify('Not in a Git repository.', vim.log.levels.WARN)
+        end
       end,
       desc = '[G]it [C]ommits (Project)',
     },
     {
       '<leader>gC',
       function()
-        require('telescope.builtin').git_bcommits()
+        local git_utils = require('utils.git')
+        local repo_path = git_utils.get_git_repo_path()
+        if repo_path then
+          require('telescope.builtin').git_bcommits({ cwd = repo_path })
+        else
+          vim.notify('Not in a Git repository.', vim.log.levels.WARN)
+        end
       end,
       desc = '[G]it [C]ommits (Buffer)',
     },
     {
       '<leader>gb',
       function()
-        require('telescope.builtin').git_branches()
+        local git_utils = require('utils.git')
+        local repo_path = git_utils.get_git_repo_path()
+        if repo_path then
+          require('telescope.builtin').git_branches({ cwd = repo_path })
+        else
+          vim.notify('Not in a Git repository.', vim.log.levels.WARN)
+        end
       end,
       desc = '[G]it [B]ranches',
     },
     {
       '<leader>gS',
       function()
-        require('telescope.builtin').git_stash()
+        local git_utils = require('utils.git')
+        local repo_path = git_utils.get_git_repo_path()
+        if repo_path then
+          require('telescope.builtin').git_stash({ cwd = repo_path })
+        else
+          vim.notify('Not in a Git repository.', vim.log.levels.WARN)
+        end
       end,
       desc = '[G]it [S]tash',
     },
