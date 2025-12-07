@@ -6,6 +6,6 @@ return -- Lua
   },
   opts = {},
   keys = {
-    { '<leader>z', ':ZenMode<CR>', { desc = 'ZenMode' } },
+    { '<leader>uz', ':ZenMode<CR>', { desc = 'Toggle ZenMode' } },
   },
 }

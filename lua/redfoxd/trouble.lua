@@ -41,6 +41,37 @@ return {
       end,
       desc = 'Next Trouble/Quickfix Item',
     },
+    {
+      '<leader>xt',
+      function()
+        require('trouble').toggle()
+      end,
+      desc = 'Open diagnostics in trouble',
+    },
+    {
+      '<leader>cs',
+      function()
+        require('trouble').toggle 'document_symbols'
+      end,
+      mode = { 'n', 'x' },
+      desc = '[S]ymbols',
+    },
+    {
+      '<leader>cr',
+      function()
+        require('trouble').toggle 'lsp_references'
+      end,
+      mode = { 'n', 'x' },
+      desc = '[R]eferences',
+    },
+    {
+      '<leader>cd',
+      function()
+        require('trouble').toggle 'lsp_definitions'
+      end,
+      mode = { 'n', 'x' },
+      desc = '[D]efinitions',
+    },
   },
   opts = {
     -- Your configuration goes here
