@@ -1,14 +1,16 @@
 return {
-  -- cmd = {...},
-  -- filetypes = { ...},
-  -- capabilities = {},
   settings = {
     Lua = {
       completion = {
         callSnippet = 'Replace',
       },
-      -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-      -- diagnostics = { disable = { 'missing-fields' } },
+      runtime = { version = 'LuaJIT', path = vim.split(package.path, ';') },
+      workspace = {
+        -- Don't analyze code from submodules
+        ignoreSubmodules = true,
+        -- Add Neovim's methods for easier code writing
+        library = { vim.env.VIMRUNTIME },
+      },
     },
   },
 }
